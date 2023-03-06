@@ -130,6 +130,7 @@ const TodoItemListPane: FC<TodoItemListPaneProps> = (props: TodoItemListPaneProp
                 listId: props.list?.id || '',
                 state: TodoItemState.Todo,
             }
+            console.log('save item ****')
             props.onCreated(item);
             setNewItemName('');
         }

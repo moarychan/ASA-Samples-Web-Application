@@ -17,10 +17,12 @@ export abstract class RestService<T extends Entity> {
     public constructor(baseUrl: string, baseRoute: string) {
         this.client = axios.create({
             baseURL: `${baseUrl}${baseRoute}`
+            // withCredentials: true,
         });
     }
 
     public async getList(queryOptions?: QueryOptions): Promise<T[]> {
+        console.log(this)
         const response = await this.client.request<T[]>({
             method: 'GET',
             data: queryOptions
@@ -34,7 +36,7 @@ export abstract class RestService<T extends Entity> {
             method: 'GET',
             url: id
         });
-
+        console.log('get data@', id, response.data)
         return response.data
     }
 

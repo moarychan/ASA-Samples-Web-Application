@@ -66,6 +66,7 @@ const HomePage = () => {
     }, [actions.items, appContext.state.selectedList?.id, appContext.state.selectedList?.items])
 
     const onItemCreated = async (item: TodoItem) => {
+        console.log('***', item)
         return await actions.items.save(item.listId, item);
     }
 
@@ -130,6 +131,7 @@ const HomePage = () => {
                                 <Text variant="small">{appContext.state.selectedList?.description}</Text>
                             </Fragment>
                         </Shimmer>
+                        <div id="ssssaa">****aa</div>
                     </Stack.Item>
                     <Stack.Item>
                         <IconButton

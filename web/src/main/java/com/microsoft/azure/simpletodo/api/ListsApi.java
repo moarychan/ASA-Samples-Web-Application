@@ -13,6 +13,7 @@ import com.microsoft.azure.simpletodo.model.TodoState;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+//import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.NativeWebRequest;
@@ -36,6 +37,7 @@ public interface ListsApi {
      *         or Todo list not found (status code 404)
      */
     @PostMapping("/lists/{listId}/items")
+    //@PreAuthorize("hasAuthority('SCOPE_TodoList.User')")
     default ResponseEntity<TodoItem> createItem(
         @PathVariable("listId") Long listId,
         @Valid @RequestBody(required = false) TodoItem todoItem) {
@@ -63,6 +65,7 @@ public interface ListsApi {
      *         or Invalid request schema (status code 400)
      */
     @PostMapping("/lists")
+    //@PreAuthorize("hasAuthority('SCOPE_TodoList.User')")
     default ResponseEntity<TodoList> createList(@Valid @RequestBody(required = false) TodoList todoList) {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType : MediaType.parseMediaTypes(request.getHeader("Accept"))) {
@@ -88,6 +91,7 @@ public interface ListsApi {
      *         or Todo list or item not found (status code 404)
      */
     @DeleteMapping("/lists/{listId}/items/{itemId}")
+    //@PreAuthorize("hasAuthority('SCOPE_TodoList.User')")
     default ResponseEntity<Void> deleteItemById(
         @PathVariable("listId") Long listId, @PathVariable("itemId") Long itemId) {
         return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
@@ -103,6 +107,7 @@ public interface ListsApi {
      *         or Todo list not found (status code 404)
      */
     @DeleteMapping("/lists/{listId}")
+    //@PreAuthorize("hasAuthority('SCOPE_TodoList.User')")
     default ResponseEntity<Void> deleteListById(@PathVariable("listId") Long listId) {
         return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
     }
@@ -118,6 +123,7 @@ public interface ListsApi {
      */
 
     @GetMapping("/lists/{listId}/items/{itemId}")
+    //@PreAuthorize("hasAuthority('SCOPE_TodoList.User')")
     default ResponseEntity<TodoItem> getItemById(
         @PathVariable("listId") Long listId,
         @PathVariable("itemId") Long itemId
@@ -149,6 +155,7 @@ public interface ListsApi {
      */
 
     @GetMapping("/lists/{listId}/items")
+    //@PreAuthorize("hasAuthority('SCOPE_TodoList.User')")
     default ResponseEntity<List<TodoItem>> getItemsByListId(
         @PathVariable("listId") Long listId,
         @Valid @RequestParam(value = "top", required = false, defaultValue = "20") BigDecimal top,
@@ -182,6 +189,7 @@ public interface ListsApi {
      */
 
     @GetMapping("/lists/{listId}/items/state/{state}")
+    //@PreAuthorize("hasAuthority('SCOPE_TodoList.User')")
     default ResponseEntity<List<TodoItem>> getItemsByListIdAndState(
         @PathVariable("listId") Long listId,
         @PathVariable("state") TodoState state,
@@ -213,6 +221,7 @@ public interface ListsApi {
      */
 
     @GetMapping("/lists/{listId}")
+    //@PreAuthorize("hasAuthority('SCOPE_TodoList.User')")
     default ResponseEntity<TodoList> getListById(
         @PathVariable("listId") Long listId
     ) {
@@ -240,6 +249,7 @@ public interface ListsApi {
      */
 
     @GetMapping("/lists")
+    //@PreAuthorize("hasAuthority('SCOPE_TodoList.User')")
     default ResponseEntity<List<TodoList>> getLists(
         @Valid @RequestParam(value = "top", required = false) BigDecimal top,
         @Valid @RequestParam(value = "skip", required = false) BigDecimal skip
@@ -271,6 +281,7 @@ public interface ListsApi {
      */
 
     @PutMapping("/lists/{listId}/items/{itemId}")
+    //@PreAuthorize("hasAuthority('SCOPE_TodoList.User')")
     default ResponseEntity<TodoItem> updateItemById(
         @PathVariable("listId") Long listId,
         @PathVariable("itemId") Long itemId,
@@ -303,6 +314,7 @@ public interface ListsApi {
      */
 
     @PutMapping("/lists/{listId}/items/state/{state}")
+    //@PreAuthorize("hasAuthority('SCOPE_TodoList.User')")
     default ResponseEntity<Void> updateItemsStateByListId(
         @PathVariable("listId") Long listId,
         @PathVariable("state") TodoState state,
@@ -323,6 +335,7 @@ public interface ListsApi {
      */
 
     @PutMapping("/lists/{listId}")
+    //@PreAuthorize("hasAuthority('SCOPE_TodoList.User')")
     default ResponseEntity<TodoList> updateListById(
         @PathVariable("listId") Long listId,
         @Valid @RequestBody(required = false) TodoList todoList ) {

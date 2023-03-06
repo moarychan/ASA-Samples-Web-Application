@@ -50,6 +50,10 @@
       <groupId>com.azure.spring</groupId>
       <artifactId>spring-cloud-azure-starter-jdbc-postgresql</artifactId> <!-- For passwordless connection -->
     </dependency>
+    <!--<dependency>
+      <groupId>com.azure.spring</groupId>
+      <artifactId>spring-cloud-azure-starter-active-directory-b2c</artifactId>
+    </dependency>-->
   </dependencies>
 
   <build>

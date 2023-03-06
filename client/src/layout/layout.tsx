@@ -58,7 +58,8 @@ const Layout: FC = (): ReactElement => {
                     <Sidebar
                         selectedList={appContext.state.selectedList}
                         lists={appContext.state.lists}
-                        onListCreate={onListCreated} />
+                        onListCreate={onListCreated}/>
+                    <div id="ssss">****</div>
                 </Stack.Item>
                 <Stack.Item grow={1} styles={mainStackStyles}>
                     <Routes>
@@ -67,12 +68,14 @@ const Layout: FC = (): ReactElement => {
                         <Route path="/lists" element={<HomePage />} />
                         <Route path="/" element={<HomePage />} />
                     </Routes>
+                    <div id="ssss2">****2</div>
                 </Stack.Item>
                 <Stack.Item styles={sidebarStackStyles}>
                     <TodoItemDetailPane
                         item={appContext.state.selectedItem}
                         onEdit={onItemEdited}
                         onCancel={onItemEditCancel} />
+                    <div id="ssss3">****3</div>
                 </Stack.Item>
             </Stack>
         </Stack>

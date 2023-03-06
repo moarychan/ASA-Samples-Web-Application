@@ -1,5 +1,20 @@
-import { FontIcon, getTheme, IconButton, IIconProps, IStackStyles, mergeStyles, Persona, PersonaSize, Stack, Text } from '@fluentui/react';
-import React, { FC, ReactElement } from 'react';
+import {
+    FontIcon,
+    getTheme,
+    IconButton,
+    IIconProps,
+    INavLink,
+    IStackStyles,
+    mergeStyles,
+    Persona,
+    PersonaSize,
+    Stack,
+    Text
+} from '@fluentui/react';
+import React, {FC, MouseEvent, ReactElement} from 'react';
+import {TodoList} from "../models";
+import {Account} from "../models/account";
+import { signIn } from "../auth/authPopup";
 
 const theme = getTheme();
 
@@ -34,7 +49,13 @@ const iconProps: IIconProps = {
     }
 }
 
-const Header: FC = (): ReactElement => {
+interface HeaderProps {
+    account?: Account
+    lists?: TodoList[]
+    // signIn: () => Account
+}
+
+const Header: FC<HeaderProps> = (props: HeaderProps): ReactElement => {
     return (
         <Stack horizontal>
             <Stack horizontal styles={logoStyles}>
@@ -48,7 +69,7 @@ const Header: FC = (): ReactElement => {
                 <Stack horizontal styles={toolStackClass} grow={1}>
                     <IconButton aria-label="Add" iconProps={{ iconName: "Settings", ...iconProps }} />
                     <IconButton aria-label="Add" iconProps={{ iconName: "Help", ...iconProps }} />
-                    <Persona size={PersonaSize.size24} text="Sample User" />
+                    <Persona size={PersonaSize.size24} text="Login with Azure Active Directory B2C" onClick={signIn}/>
                     {/* <Toggle label="Dark Mode" inlineLabel styles={{ root: { marginBottom: 0 } }} onChange={changeTheme} /> */}
                 </Stack>
             </Stack.Item>

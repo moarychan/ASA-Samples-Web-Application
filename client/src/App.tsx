@@ -14,7 +14,6 @@ export const App: FC = () => {
   const defaultState: ApplicationState = getDefaultState();
   const [applicationState, dispatch] = useReducer(appReducer, defaultState);
   const initialContext: AppContext = { state: applicationState, dispatch: dispatch }
-
   initializeIcons();
 
   return (
