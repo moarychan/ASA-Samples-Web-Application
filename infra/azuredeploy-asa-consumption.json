@@ -2,14 +2,6 @@
   "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
-    "location": {
-      "type": "string",
-      "defaultValue": "[resourceGroup().location]",
-      "metadata": {
-        "description": "Primary location for all resources."
-      },
-      "minLength": 1
-    },
     "postgreSQLAdminPassword": {
       "type": "securestring",
       "metadata": {
@@ -38,7 +30,7 @@
             "value": "consumption"
           },
           "location": {
-            "value": "[parameters('location')]"
+            "value": "[resourceGroup().location]"
           },
           "postgreSQLAdminPassword": {
             "value": "[parameters('postgreSQLAdminPassword')]"
