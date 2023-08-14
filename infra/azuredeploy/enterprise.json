@@ -40,7 +40,7 @@
   "resources": [
     {
       "type": "Microsoft.AppPlatform/Spring",
-      "apiVersion": "2023-03-01-preview",
+      "apiVersion": "2023-05-01-preview",
       "name": "[parameters('asaInstanceName')]",
       "location": "[parameters('location')]",
       "tags": "[parameters('tags')]",
@@ -51,7 +51,7 @@
     },
     {
       "type": "Microsoft.AppPlatform/Spring/applicationAccelerators",
-      "apiVersion": "2023-03-01-preview",
+      "apiVersion": "2023-05-01-preview",
       "name": "[concat(parameters('asaInstanceName'), '/default')]",
       "dependsOn": [
         "[resourceId('Microsoft.AppPlatform/Spring', parameters('asaInstanceName'))]"
@@ -59,7 +59,7 @@
     },
     {
       "type": "Microsoft.AppPlatform/Spring/applicationLiveViews",
-      "apiVersion": "2023-03-01-preview",
+      "apiVersion": "2023-05-01-preview",
       "name": "[concat(parameters('asaInstanceName'), '/default')]",
       "dependsOn": [
         "[resourceId('Microsoft.AppPlatform/Spring', parameters('asaInstanceName'))]"
@@ -68,7 +68,7 @@
     },
     {
       "type": "Microsoft.AppPlatform/Spring/apps",
-      "apiVersion": "2023-03-01-preview",
+      "apiVersion": "2023-05-01-preview",
       "name": "[format('{0}/{1}', parameters('asaInstanceName'), parameters('appName'))]",
       "location": "[parameters('location')]",
       "dependsOn": [
@@ -101,7 +101,7 @@
     },
     {
       "type": "Microsoft.AppPlatform/Spring/buildServices",
-      "apiVersion": "2023-03-01-preview",
+      "apiVersion": "2023-05-01-preview",
       "name": "[concat(parameters('asaInstanceName'), '/default')]",
       "dependsOn": [
         "[resourceId('Microsoft.AppPlatform/Spring', parameters('asaInstanceName'))]"
@@ -112,7 +112,7 @@
     },
     {
       "type": "Microsoft.AppPlatform/Spring/configurationServices",
-      "apiVersion": "2023-03-01-preview",
+      "apiVersion": "2023-05-01-preview",
       "name": "[concat(parameters('asaInstanceName'), '/default')]",
       "dependsOn": [
         "[resourceId('Microsoft.AppPlatform/Spring', parameters('asaInstanceName'))]"
@@ -123,7 +123,7 @@
     },
     {
       "type": "Microsoft.AppPlatform/Spring/devToolPortals",
-      "apiVersion": "2023-03-01-preview",
+      "apiVersion": "2023-05-01-preview",
       "name": "[concat(parameters('asaInstanceName'), '/default')]",
       "dependsOn": [
         "[resourceId('Microsoft.AppPlatform/Spring', parameters('asaInstanceName'))]"
@@ -142,7 +142,7 @@
     },
     {
       "type": "Microsoft.AppPlatform/Spring/gateways",
-      "apiVersion": "2023-03-01-preview",
+      "apiVersion": "2023-05-01-preview",
       "name": "[concat(parameters('asaInstanceName'), '/default')]",
       "dependsOn": [
         "[resourceId('Microsoft.AppPlatform/Spring', parameters('asaInstanceName'))]"
@@ -166,7 +166,7 @@
     },
     {
       "type": "Microsoft.AppPlatform/Spring/serviceRegistries",
-      "apiVersion": "2023-03-01-preview",
+      "apiVersion": "2023-05-01-preview",
       "name": "[concat(parameters('asaInstanceName'), '/default')]",
       "dependsOn": [
         "[resourceId('Microsoft.AppPlatform/Spring', parameters('asaInstanceName'))]"
@@ -174,7 +174,7 @@
     },
     {
       "type": "Microsoft.AppPlatform/Spring/apiPortals",
-      "apiVersion": "2023-03-01-preview",
+      "apiVersion": "2023-05-01-preview",
       "name": "[concat(parameters('asaInstanceName'), '/default')]",
       "dependsOn": [
         "[resourceId('Microsoft.AppPlatform/Spring', parameters('asaInstanceName'))]",
@@ -253,7 +253,7 @@
     },
     {
       "type": "Microsoft.AppPlatform/Spring/apps/deployments",
-      "apiVersion": "2023-03-01-preview",
+      "apiVersion": "2023-05-01-preview",
       "name": "[format('{0}/{1}/{2}', parameters('asaInstanceName'), parameters('appName'), 'default')]",
       "dependsOn": [
         "[resourceId('Microsoft.AppPlatform/Spring/apps', parameters('asaInstanceName'), parameters('appName'))]",
@@ -275,7 +275,7 @@
     },
     {
       "type": "Microsoft.AppPlatform/Spring/buildServices/agentPools",
-      "apiVersion": "2023-03-01-preview",
+      "apiVersion": "2023-05-01-preview",
       "name": "[concat(parameters('asaInstanceName'), '/default/default')]",
       "dependsOn": [
         "[resourceId('Microsoft.AppPlatform/Spring/buildServices', parameters('asaInstanceName'), 'default')]",
@@ -289,7 +289,7 @@
     },
     {
       "type": "Microsoft.AppPlatform/Spring/buildServices/builders",
-      "apiVersion": "2023-03-01-preview",
+      "apiVersion": "2023-05-01-preview",
       "name": "[concat(parameters('asaInstanceName'), '/default/default')]",
       "dependsOn": [
         "[resourceId('Microsoft.AppPlatform/Spring/buildServices', parameters('asaInstanceName'), 'default')]",
