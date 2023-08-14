@@ -221,7 +221,7 @@
       "location": "[parameters('location')]",
       "dependsOn": [
         "[resourceId('Microsoft.Authorization/roleAssignments', variables('name_roleAssignmentName'))]",
-        "[resourceId('Microsoft.AppPlatform/Spring/apps/deployments', format('{0}/{1}/{2}', parameters('asaInstanceName'), parameters('appName'), 'default'))]"
+        "[resourceId('Microsoft.AppPlatform/Spring/apps/deployments', parameters('asaInstanceName'), parameters('appName'), 'default')]"
       ],
       "kind": "AzureCLI",
       "identity": {
