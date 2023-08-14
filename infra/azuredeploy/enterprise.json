@@ -272,9 +272,14 @@
           }
         },
         "source": {
-          "type": "Jar",
-          "runtimeVersion": "Java_17",
-          "relativePath": "[reference(variables('name_deploymentScriptName')).outputs.relativePath]"
+          "type": "Container",
+          "customContainer": {
+            "containerImage": "azurespringapps/samples/web:0.0.1",
+            "languageFramework": "springboot",
+            "server": "mcr.microsoft.com",
+            "command": [],
+            "args": []
+          }
         }
       }
     },
