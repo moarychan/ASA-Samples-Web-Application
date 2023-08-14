@@ -189,10 +189,194 @@
   },
   "resources": [
     {
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2022-09-01",
+      "name": "[format('{0}--pg', deployment().name)]",
+      "properties": {
+        "expressionEvaluationOptions": {
+          "scope": "inner"
+        },
+        "mode": "Incremental",
+        "parameters": {
+          "serverName": {
+            "value": "[variables('psqlServerName')]"
+          },
+          "location": {
+            "value": "[parameters('location')]"
+          },
+          "tags": {
+            "value": "[variables('tags')]"
+          },
+          "psqlAdminName": {
+            "value": "[variables('psqlAdminName')]"
+          },
+          "psqlUserName": {
+            "value": "[variables('psqlUserName')]"
+          },
+          "postgreSQLAdminPassword": {
+            "value": "[parameters('postgreSQLAdminPassword')]"
+          },
+          "postgreSQLUserPassword": {
+            "value": "[parameters('postgreSQLUserPassword')]"
+          },
+          "databaseName": {
+            "value": "[variables('databaseName')]"
+          }
+        },
+        "template": {
+          "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+          "contentVersion": "1.0.0.0",
+          "metadata": {
+            "_generator": {
+              "name": "bicep",
+              "version": "0.18.4.5664",
+              "templateHash": "1996469036368566872"
+            }
+          },
+          "parameters": {
+            "serverName": {
+              "type": "string"
+            },
+            "location": {
+              "type": "string",
+              "defaultValue": "[resourceGroup().location]"
+            },
+            "tags": {
+              "type": "object",
+              "defaultValue": {}
+            },
+            "psqlAdminName": {
+              "type": "string"
+            },
+            "psqlUserName": {
+              "type": "string"
+            },
+            "postgreSQLAdminPassword": {
+              "type": "securestring"
+            },
+            "postgreSQLUserPassword": {
+              "type": "securestring"
+            },
+            "databaseName": {
+              "type": "string",
+              "defaultValue": "todo"
+            },
+            "version": {
+              "type": "string",
+              "defaultValue": "14"
+            }
+          },
+          "resources": [
+            {
+              "type": "Microsoft.DBforPostgreSQL/flexibleServers/databases",
+              "apiVersion": "2022-12-01",
+              "name": "[format('{0}/{1}', parameters('serverName'), parameters('databaseName'))]",
+              "properties": {
+                "charset": "utf8",
+                "collation": "en_US.utf8"
+              },
+              "dependsOn": [
+                "[resourceId('Microsoft.DBforPostgreSQL/flexibleServers', parameters('serverName'))]"
+              ]
+            },
+            {
+              "type": "Microsoft.DBforPostgreSQL/flexibleServers/firewallRules",
+              "apiVersion": "2022-12-01",
+              "name": "[format('{0}/{1}', parameters('serverName'), 'allow-all-IPs')]",
+              "properties": {
+                "startIpAddress": "0.0.0.0",
+                "endIpAddress": "255.255.255.255"
+              },
+              "dependsOn": [
+                "[resourceId('Microsoft.DBforPostgreSQL/flexibleServers', parameters('serverName'))]"
+              ]
+            },
+            {
+              "type": "Microsoft.DBforPostgreSQL/flexibleServers",
+              "apiVersion": "2022-12-01",
+              "name": "[parameters('serverName')]",
+              "location": "[parameters('location')]",
+              "tags": "[parameters('tags')]",
+              "sku": {
+                "name": "Standard_D4s_v3",
+                "tier": "GeneralPurpose"
+              },
+              "properties": {
+                "version": "[parameters('version')]",
+                "administratorLogin": "[parameters('psqlAdminName')]",
+                "administratorLoginPassword": "[parameters('postgreSQLAdminPassword')]",
+                "storage": {
+                  "storageSizeGB": 32
+                },
+                "availabilityZone": "1",
+                "highAvailability": {
+                  "mode": "Disabled"
+                },
+                "authConfig": {
+                  "activeDirectoryAuth": "Disabled",
+                  "passwordAuth": "Enabled",
+                  "tenantId": "[subscription().tenantId]"
+                }
+              }
+            },
+            {
+              "type": "Microsoft.Resources/deploymentScripts",
+              "apiVersion": "2020-10-01",
+              "name": "psql-deployment-script",
+              "location": "[parameters('location')]",
+              "kind": "AzureCLI",
+              "properties": {
+                "azCliVersion": "2.40.0",
+                "retentionInterval": "PT1H",
+                "timeout": "PT5M",
+                "cleanupPreference": "OnSuccess",
+                "environmentVariables": [
+                  {
+                    "name": "PSQLADMINNAME",
+                    "value": "[parameters('psqlAdminName')]"
+                  },
+                  {
+                    "name": "PSQLADMINPASSWORD",
+                    "secureValue": "[parameters('postgreSQLAdminPassword')]"
+                  },
+                  {
+                    "name": "PSQLUSERNAME",
+                    "value": "[parameters('psqlUserName')]"
+                  },
+                  {
+                    "name": "PSQLUSERPASSWORD",
+                    "secureValue": "[parameters('postgreSQLUserPassword')]"
+                  },
+                  {
+                    "name": "DBNAME",
+                    "value": "[parameters('databaseName')]"
+                  },
+                  {
+                    "name": "DBSERVER",
+                    "value": "[parameters('serverName')]"
+                  }
+                ],
+                "scriptContent": "apk add postgresql-client\n\ncat << EOF > create_user.sql\nCREATE ROLE \"$PSQLUSERNAME\" WITH LOGIN PASSWORD '$PSQLUSERPASSWORD';\nGRANT ALL PRIVILEGES ON DATABASE $DBNAME TO \"$PSQLUSERNAME\";\nEOF\n\npsql \"host=$DBSERVER.postgres.database.azure.com user=$PSQLADMINNAME dbname=$DBNAME port=5432 password=$PSQLADMINPASSWORD sslmode=require\" < create_user.sql\n    "
+              },
+              "dependsOn": [
+                "[resourceId('Microsoft.DBforPostgreSQL/flexibleServers', parameters('serverName'))]"
+              ]
+            }
+          ],
+          "outputs": {
+            "POSTGRES_DOMAIN_NAME": {
+              "type": "string",
+              "value": "[reference(resourceId('Microsoft.DBforPostgreSQL/flexibleServers', parameters('serverName')), '2022-12-01').fullyQualifiedDomainName]"
+            }
+          }
+        }
+      }
+    },
+    {
       "condition": "[equals(parameters('plan'), 'consumption')]",
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2022-09-01",
-      "name": "[format('{0}--asa-ard2', deployment().name)]",
+      "name": "[format('{0}--ard2', deployment().name)]",
       "properties": {
         "expressionEvaluationOptions": {
           "scope": "inner"
@@ -234,7 +418,7 @@
       "condition": "[equals(parameters('plan'), 'standard')]",
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2022-09-01",
-      "name": "[format('{0}--asa-ard', deployment().name)]",
+      "name": "[format('{0}--ard', deployment().name)]",
       "properties": {
         "expressionEvaluationOptions": {
           "scope": "inner"
@@ -276,7 +460,7 @@
       "condition": "[equals(parameters('plan'), 'enterprise')]",
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2022-09-01",
-      "name": "[format('{0}--asa-ent', deployment().name)]",
+      "name": "[format('{0}--ent', deployment().name)]",
       "properties": {
         "expressionEvaluationOptions": {
           "scope": "inner"
