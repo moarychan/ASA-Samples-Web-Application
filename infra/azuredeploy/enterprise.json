@@ -256,8 +256,7 @@
       "name": "[format('{0}/{1}/{2}', parameters('asaInstanceName'), parameters('appName'), 'default')]",
       "dependsOn": [
         "[resourceId('Microsoft.AppPlatform/Spring/apps', parameters('asaInstanceName'), parameters('appName'))]",
-        "[resourceId('Microsoft.AppPlatform/Spring', parameters('asaInstanceName'))]",
-        "[resourceId('Microsoft.AppPlatform/Spring/buildServices/builds', parameters('asaInstanceName'), 'default', concat(parameters('appName'), 'default'))]"
+        "[resourceId('Microsoft.AppPlatform/Spring', parameters('asaInstanceName'))]"
       ],
       "properties": {
         "active": true,
