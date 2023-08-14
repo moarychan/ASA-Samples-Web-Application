@@ -45,6 +45,7 @@ else
     curl -H "Authorization: $auth_header" "$source_url" -o $jar_file_name
 fi
 
+az extension add --name spring --upgrade
 az spring app deploy --resource-group $RESOURCE_GROUP --service $ASA_SERVICE_NAME --name simple-todo-web --artifact-path $jar_file_name
 
 # Delete uami generated before exiting the script
