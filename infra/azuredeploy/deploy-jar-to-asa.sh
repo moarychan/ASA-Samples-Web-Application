@@ -36,8 +36,6 @@ fi
 source_url="https://github.com/Azure-Samples/ASA-Samples-Web-Application/releases/download/v0.0.1/simple-todo-web-0.0.1.jar"
 auth_header="no-auth"
 
-path=$(echo $upload_url | awk -F'[/?]' '{print $(NF-1)}')
-
 # Download binary
 echo "Downloading binary from $source_url to $path"
 if [ "$auth_header" == "no-auth" ]; then
