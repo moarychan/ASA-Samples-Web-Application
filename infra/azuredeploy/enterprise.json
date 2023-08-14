@@ -40,24 +40,13 @@
   "resources": [
     {
       "type": "Microsoft.AppPlatform/Spring",
-      "apiVersion": "2023-03-01-preview",
+      "apiVersion": "2023-05-01-preview",
       "name": "[parameters('asaInstanceName')]",
       "location": "[parameters('location')]",
       "tags": "[parameters('tags')]",
       "sku": {
         "name": "E0",
         "tier": "Enterprise"
-      },
-      "properties": {
-        "zoneRedundant": false,
-        "networkProfile": {
-          "outboundType": "loadBalancer"
-        },
-        "marketplaceResource": {
-          "plan": "asa-ent-hr-mtr",
-          "publisher": "vmware-inc",
-          "product": "azure-spring-cloud-vmware-tanzu-2"
-        }
       }
     }
   ],
