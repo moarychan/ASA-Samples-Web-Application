@@ -9,18 +9,6 @@
         "description": "Primary location for all resources."
       },
       "minLength": 1
-    },
-    "postgreSQLAdminPassword": {
-      "type": "securestring",
-      "metadata": {
-        "description": "The password for the PostgreSQL Server administrator."
-      }
-    },
-    "postgreSQLUserPassword": {
-      "type": "securestring",
-      "metadata": {
-        "description": "The password for the PostgreSQL application user, which will be used in the application."
-      }
     }
   },
   "resources": [
@@ -38,13 +26,13 @@
             "value": "enterprise"
           },
           "location": {
-            "value": "[parameters('location')]"
+            "value": "[resourceGroup().location]"
           },
           "postgreSQLAdminPassword": {
-            "value": "[parameters('postgreSQLAdminPassword')]"
+            "value": "HelloWorld"
           },
           "postgreSQLUserPassword": {
-            "value": "[parameters('postgreSQLUserPassword')]"
+            "value": "HelloWorld"
           }
         },
         "templateLink": {

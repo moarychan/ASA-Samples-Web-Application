@@ -264,11 +264,6 @@
           "resourceRequests": {
             "cpu": "1",
             "memory": "2Gi"
-          },
-          "environmentVariables": {
-            "SPRING_DATASOURCE_URL": "[parameters('datasourceUrl')]",
-            "SPRING_DATASOURCE_USERNAME": "[parameters('databaseUsername')]",
-            "SPRING_DATASOURCE_PASSWORD": "[parameters('databasePassword')]"
           }
         },
         "source": {
