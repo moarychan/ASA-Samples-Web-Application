@@ -299,7 +299,13 @@
       "dependsOn": [
         "[resourceId('Microsoft.AppPlatform/Spring/buildServices', parameters('asaInstanceName'), 'default')]",
         "[resourceId('Microsoft.AppPlatform/Spring', parameters('asaInstanceName'))]"
-      ]
+      ],
+      "properties": {
+        "stack": {
+          "id": "io.buildpacks.stacks.bionic",
+          "version": "base"
+        }
+      }
     }
   ],
   "outputs": {
