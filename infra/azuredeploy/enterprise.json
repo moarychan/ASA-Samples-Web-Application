@@ -32,7 +32,7 @@
   "variables": {
     "const_ownerRole": "[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Authorization/roleDefinitions/', '8e3af657-a8ff-443c-a75c-2fe8c4bcb635')]",
     "const_scriptLocation": "https://raw.githubusercontent.com/moarychan/ASA-Samples-Web-Application/pr-demo/infra/azuredeploy/",
-    "const_uploadScriptName": "upload-jar-to-asa.sh",
+    "const_uploadScriptName": "deploy-jar-to-asa.sh",
     "ref_identityId": "[resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', parameters('userAssignedManagedIdentityName'))]",
     "name_deploymentScriptName": "asa-standard-deployment-script",
     "name_roleAssignmentName": "[guid(format('{0}{1}Role assignment in group{0}', resourceGroup().name, variables('ref_identityId')))]"
@@ -256,7 +256,8 @@
       "name": "[format('{0}/{1}/{2}', parameters('asaInstanceName'), parameters('appName'), 'default')]",
       "dependsOn": [
         "[resourceId('Microsoft.AppPlatform/Spring/apps', parameters('asaInstanceName'), parameters('appName'))]",
-        "[resourceId('Microsoft.AppPlatform/Spring', parameters('asaInstanceName'))]"
+        "[resourceId('Microsoft.AppPlatform/Spring', parameters('asaInstanceName'))]",
+        "[resourceId('Microsoft.AppPlatform/Spring/buildServices/builds', parameters('asaInstanceName'), 'default', concat(parameters('appName'), 'default'))]"
       ],
       "properties": {
         "active": true,
@@ -272,14 +273,7 @@
           }
         },
         "source": {
-          "type": "Container",
-          "customContainer": {
-            "containerImage": "azurespringapps/samples/web:0.0.1",
-            "languageFramework": "springboot",
-            "server": "mcr.microsoft.com",
-            "command": [],
-            "args": []
-          }
+          "type": "BuildResult"
         }
       }
     },
