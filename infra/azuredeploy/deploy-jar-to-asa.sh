@@ -33,18 +33,19 @@ if [[ -z "$ASA_SERVICE_NAME" ]]; then
   exit 1
 fi
 
-source_url="https://github.com/Azure-Samples/ASA-Samples-Web-Application/releases/download/v0.0.1/simple-todo-web-0.0.1.jar"
+jar_file_name="simple-todo-web-0.0.1.jar"
+source_url="https://github.com/Azure-Samples/ASA-Samples-Web-Application/releases/download/v0.0.1/$jar_file_name"
 auth_header="no-auth"
 
 # Download binary
-echo "Downloading binary from $source_url to $path"
+echo "Downloading binary from $source_url to $jar_file_name"
 if [ "$auth_header" == "no-auth" ]; then
-    curl -L "$source_url" -o $path
+    curl -L "$source_url" -o $jar_file_name
 else
-    curl -H "Authorization: $auth_header" "$source_url" -o $path
+    curl -H "Authorization: $auth_header" "$source_url" -o $jar_file_name
 fi
 
-az spring app deploy --resource-group $RESOURCE_GROUP --service $ASA_SERVICE_NAME --name simple-todo-web --artifact-path $path
+az spring app deploy --resource-group $RESOURCE_GROUP --service $ASA_SERVICE_NAME --name simple-todo-web --artifact-path $jar_file_name
 
 # Delete uami generated before exiting the script
 az identity delete --ids ${AZ_SCRIPTS_USER_ASSIGNED_IDENTITY}
