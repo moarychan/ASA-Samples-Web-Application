@@ -105,7 +105,10 @@
       "name": "[concat(parameters('asaInstanceName'), '/default')]",
       "dependsOn": [
         "[resourceId('Microsoft.AppPlatform/Spring', parameters('asaInstanceName'))]"
-      ]
+      ],
+      "properties": {
+        "resourceRequests": {}
+      }
     },
     {
       "type": "Microsoft.AppPlatform/Spring/configurationServices",
