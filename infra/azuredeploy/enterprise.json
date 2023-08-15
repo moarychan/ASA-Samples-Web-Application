@@ -257,7 +257,7 @@
       "name": "[format('{0}/{1}/{2}', parameters('asaInstanceName'), parameters('appName'), 'default')]",
       "dependsOn": [
         "[resourceId('Microsoft.AppPlatform/Spring/apps', parameters('asaInstanceName'), parameters('appName'))]",
-        "[resourceId('Microsoft.AppPlatform/Spring/buildServices', parameters('asaInstanceName'), 'default')]"
+        "[resourceId('Microsoft.AppPlatform/Spring/buildServices/builders', parameters('asaInstanceName'), 'default', 'default')]"
       ],
       "properties": {
         "active": true,
@@ -289,6 +289,21 @@
       "properties": {
         "poolSize": {
           "name": "S1"
+        }
+      }
+    },
+    {
+      "type": "Microsoft.AppPlatform/Spring/buildServices/builders",
+      "apiVersion": "2023-05-01-preview",
+      "name": "[concat(parameters('asaInstanceName'), '/default/default')]",
+      "dependsOn": [
+        "[resourceId('Microsoft.AppPlatform/Spring/buildServices', parameters('asaInstanceName'), 'default')]",
+        "[resourceId('Microsoft.AppPlatform/Spring', parameters('asaInstanceName'))]"
+      ],
+      "properties": {
+        "stack": {
+          "id": "io.buildpacks.stacks.bionic",
+          "version": "base"
         }
       }
     }
