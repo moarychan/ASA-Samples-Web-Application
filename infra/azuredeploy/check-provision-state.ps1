@@ -24,7 +24,7 @@ if (!$asaServiceName) {
 # $apiUrl = 'https://management.azure.com/subscriptions/' + $subscriptionId + '/resourceGroups/' + $resourceGroup + '/providers/Microsoft.AppPlatform/Spring/' + $asaServiceName + '/buildServices/default?api-version=2023-05-01-preview'
 $apiUrl = 'https://management.azure.com/subscriptions/' + $subscriptionId + '/resourceGroups/' + $resourceGroup + '/providers/Microsoft.AppPlatform/Spring/' + $asaServiceName + '/buildServices/default/builders/default?api-version=2023-05-01-preview'
 $state = $null
-$timeout = New-TimeSpan -Seconds 240
+$timeout = New-TimeSpan -Seconds 300
 Write-Output "Check the status of Build Service provisioning state within $timeout ..."
 $sw = [System.Diagnostics.Stopwatch]::StartNew()
 $accessToken = (Get-AzAccessToken).Token
@@ -41,10 +41,8 @@ while ($sw.Elapsed -lt $timeout) {
     }
     Start-Sleep -Seconds 3
 }
-
+Write-Output "State: $state"
 if ($state -ne $Succeeded) {
     Write-Error "The Build Service provisioning state is not succeeded."
     exit 1
 }
-
-Write-Output "State: $state"
