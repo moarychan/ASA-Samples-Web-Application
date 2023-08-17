@@ -1,7 +1,7 @@
 # Set the API endpoint URL
 $apiUrl = "https://api.example.com/endpoint"
 
-$apiUrl = 'https://management.azure.com/subscriptions/$env:SUBSCRIPTION_ID/resourceGroups/$env:RESOURCE_GROUP/providers/Microsoft.AppPlatform/Spring/$env:ASA_SERVICE_NAME/apps/simple-todo-web/getResourceUploadUrl?api-version=2023-05-01-preview'
+$apiUrl = 'https://management.azure.com/subscriptions/$SUBSCRIPTION_ID/resourceGroups/$RESOURCE_GROUP/providers/Microsoft.AppPlatform/Spring/$ASA_SERVICE_NAME/buildServices/default?api-version=2023-05-01-preview'
 $state = $null
 $timeout = New-TimeSpan -Seconds 180
 $sw = [System.Diagnostics.Stopwatch]::StartNew()
