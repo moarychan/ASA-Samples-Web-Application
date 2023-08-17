@@ -30,10 +30,11 @@ $accessToken = (Get-AzAccessToken).Token
 $headers = @{
     'Authorization' = 'Bearer ' + $accessToken
 }
-$Succeeded = '"Succeeded"'
+$Succeeded = 'Succeeded'
 while ($sw.Elapsed -lt $timeout) {
     $response = Invoke-WebRequest -Uri $apiUrl -Headers $headers -Method GET
-    $state = $response.Content | jq ".properties.provisioningState"
+    $content = $response.Content | ConvertFrom-Json
+    $state = $content.properties.provisioningState
     if ($state -eq $Succeeded) {
         break
     }
