@@ -21,10 +21,10 @@
             "value": "[resourceGroup().location]"
           },
           "postgreSQLAdminPassword": {
-            "value": "[parameters('postgreSQLAdminPassword')]"
+            "value": "test"
           },
           "postgreSQLUserPassword": {
-            "value": "[parameters('postgreSQLUserPassword')]"
+            "value": "test"
           }
         },
         "templateLink": {
