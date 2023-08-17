@@ -33,6 +33,31 @@ if [[ -z "$ASA_SERVICE_NAME" ]]; then
   exit 1
 fi
 
+# Set the timeout in seconds for checking Build Service provisioning state
+checking_state_timeout=180
+# Get the start time
+start_time=$(date +%s)
+# Calculate the end time
+end_time=$((start_time + checking_state_timeout))
+echo "Checking Build Service provisioning state for $checking_state_timeout seconds..."
+# Loop until the end time is reached
+while [ $(date +%s) -lt $end_time ]
+do
+    get_build_services_result=$(az rest -m post -u "https://management.azure.com/subscriptions/$SUBSCRIPTION_ID/resourceGroups/$RESOURCE_GROUP/providers/Microsoft.AppPlatform/Spring/$ASA_SERVICE_NAME/buildServices/default?api-version=2023-05-01-preview")
+    provisioning_state=$(echo $get_build_services_result | jq -r '.properties.provisioningState')
+    if [ "$provisioning_state" == "Succeeded" ]; then
+        break
+    fi
+    echo -n "."
+    sleep 3
+done
+echo ""
+if [ "$provisioning_state" != "Succeeded" ]; then
+  echo "The Build Service provisioning state is not succeeded."
+  exit 1
+fi
+
+echo "Start to upload jar file to Azure Spring Apps..."
 get_resource_upload_url_result=$(az rest -m post -u "https://management.azure.com/subscriptions/$SUBSCRIPTION_ID/resourceGroups/$RESOURCE_GROUP/providers/Microsoft.AppPlatform/Spring/$ASA_SERVICE_NAME/apps/simple-todo-web/getResourceUploadUrl?api-version=2023-05-01-preview")
 upload_url=$(echo $get_resource_upload_url_result | jq -r '.uploadUrl')
 relative_path=$(echo $get_resource_upload_url_result | jq -r '.relativePath')
