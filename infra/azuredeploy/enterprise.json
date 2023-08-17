@@ -232,7 +232,7 @@
         }
       },
       "properties": {
-        "azPowerShellVersion": "10.2.0",
+        "azPowerShellVersion": "9.7",
         "primaryScriptUri": "[uri(variables('const_scriptLocation'), variables('const_checkScriptName'))]",
         "environmentVariables": [
           {
