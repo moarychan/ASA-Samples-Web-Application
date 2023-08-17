@@ -3,21 +3,46 @@
 param()
 
 # Set the API endpoint URL
-$apiUrl = 'https://management.azure.com/subscriptions/$SUBSCRIPTION_ID/resourceGroups/$RESOURCE_GROUP/providers/Microsoft.AppPlatform/Spring/$ASA_SERVICE_NAME/buildServices/default?api-version=2023-05-01-preview'
+$subscriptionId = $env:SUBSCRIPTION_ID
+$resourceGroup = $env:RESOURCE_GROUP
+$asaServiceName = $env:ASA_SERVICE_NAME
+
+# Fail fast the deployment if envs are empty
+if (!$subscriptionId) {
+    Write-Error "The subscription Id is not successfully retrieved, please retry another deployment."
+    exit 1
+}
+if (!$resourceGroup) {
+    Write-Error "The resource group is not successfully retrieved, please retry another deployment."
+    exit 1
+}
+if (!$asaServiceName) {
+    Write-Error "The Azure Spring Apps service name is not successfully retrieved, please retry another deployment."
+    exit 1
+}
+
+$apiUrl = 'https://management.azure.com/subscriptions/' + $subscriptionId + '/resourceGroups/' + $resourceGroup + '/providers/Microsoft.AppPlatform/Spring/' + $asaServiceName + '/buildServices/default?api-version=2023-05-01-preview'
 $state = $null
 $timeout = New-TimeSpan -Seconds 180
+Write-Output "Check the status of Build Service provisioning state within $timeout ..."
 $sw = [System.Diagnostics.Stopwatch]::StartNew()
 $accessToken = (Get-AzAccessToken).Token
+$headers = @{
+    'Authorization' = 'Bearer ' + $accessToken
+}
+$Succeeded = '"Succeeded"'
 while ($sw.Elapsed -lt $timeout) {
-    $headers = @{
-        'Authorization' = 'Bearer ' + $accessToken
-    }
     $response = Invoke-WebRequest -Uri $apiUrl -Headers $headers -Method GET
-    $state = $response | jq '.properties.provisioningState'
-    if ($state -eq 'Succeeded') {
+    $state = $response.Content | jq ".properties.provisioningState"
+    if ($state -eq $Succeeded) {
         break
     }
     Start-Sleep -Seconds 3
+}
+
+if ($state -ne $Succeeded) {
+    Write-Error "The Build Service provisioning state is not succeeded."
+    exit 1
 }
 
 Write-Output "State: $state"
