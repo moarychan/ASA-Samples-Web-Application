@@ -1,6 +1,8 @@
-# Set the API endpoint URL
-$apiUrl = "https://api.example.com/endpoint"
 
+[CmdLetBinding()]
+param()
+
+# Set the API endpoint URL
 $apiUrl = 'https://management.azure.com/subscriptions/$SUBSCRIPTION_ID/resourceGroups/$RESOURCE_GROUP/providers/Microsoft.AppPlatform/Spring/$ASA_SERVICE_NAME/buildServices/default?api-version=2023-05-01-preview'
 $state = $null
 $timeout = New-TimeSpan -Seconds 180
