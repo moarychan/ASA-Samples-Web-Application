@@ -2,7 +2,6 @@
 [CmdLetBinding()]
 param()
 
-# Set the API endpoint URL
 $subscriptionId = $env:SUBSCRIPTION_ID
 $resourceGroup = $env:RESOURCE_GROUP
 $asaServiceName = $env:ASA_SERVICE_NAME
@@ -21,7 +20,6 @@ if (!$asaServiceName) {
     exit 1
 }
 
-# $apiUrl = 'https://management.azure.com/subscriptions/' + $subscriptionId + '/resourceGroups/' + $resourceGroup + '/providers/Microsoft.AppPlatform/Spring/' + $asaServiceName + '/buildServices/default?api-version=2023-05-01-preview'
 $apiUrl = 'https://management.azure.com/subscriptions/' + $subscriptionId + '/resourceGroups/' + $resourceGroup + '/providers/Microsoft.AppPlatform/Spring/' + $asaServiceName + '/buildServices/default/builders/default?api-version=2023-05-01-preview'
 $state = $null
 $timeout = New-TimeSpan -Seconds 480
