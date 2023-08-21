@@ -222,7 +222,6 @@
       "name": "[variables('name_deploymentScriptName')]",
       "location": "[parameters('location')]",
       "dependsOn": [
-        "[resourceId('Microsoft.Resources/deploymentScripts', variables('const_checkingBuilderStateDeploymentName'))]",
         "[resourceId('Microsoft.Authorization/roleAssignments', variables('name_roleAssignmentName'))]",
         "[resourceId('Microsoft.AppPlatform/Spring/apps/deployments', parameters('asaInstanceName'), parameters('appName'), 'default')]",
         "[resourceId('Microsoft.AppPlatform/Spring/buildServices/builders', parameters('asaInstanceName'), 'default', 'default')]"
