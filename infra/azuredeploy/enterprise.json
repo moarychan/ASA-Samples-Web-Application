@@ -219,49 +219,13 @@
     {
       "type": "Microsoft.Resources/deploymentScripts",
       "apiVersion": "2020-10-01",
-      "name": "[variables('const_checkingBuilderStateDeploymentName')]",
-      "location": "[parameters('location')]",
-      "dependsOn": [
-        "[resourceId('Microsoft.Authorization/roleAssignments', variables('name_roleAssignmentName'))]",
-        "[resourceId('Microsoft.AppPlatform/Spring/apps/deployments', parameters('asaInstanceName'), parameters('appName'), 'default')]"
-      ],
-      "kind": "AzurePowerShell",
-      "identity": {
-        "type": "UserAssigned",
-        "userAssignedIdentities": {
-          "[format('{0}', resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', parameters('userAssignedManagedIdentityName')))]": {}
-        }
-      },
-      "properties": {
-        "azPowerShellVersion": "9.7",
-        "primaryScriptUri": "[uri(variables('const_scriptLocation'), variables('const_checkScriptName'))]",
-        "environmentVariables": [
-          {
-            "name": "SUBSCRIPTION_ID",
-            "value": "[subscription().subscriptionId]"
-          },
-          {
-            "name": "RESOURCE_GROUP",
-            "value": "[resourceGroup().name]"
-          },
-          {
-            "name": "ASA_SERVICE_NAME",
-            "value": "[parameters('asaInstanceName')]"
-          }
-        ],
-        "cleanupPreference": "OnSuccess",
-        "retentionInterval": "P1D"
-      }
-    },
-    {
-      "type": "Microsoft.Resources/deploymentScripts",
-      "apiVersion": "2020-10-01",
       "name": "[variables('name_deploymentScriptName')]",
       "location": "[parameters('location')]",
       "dependsOn": [
         "[resourceId('Microsoft.Resources/deploymentScripts', variables('const_checkingBuilderStateDeploymentName'))]",
         "[resourceId('Microsoft.Authorization/roleAssignments', variables('name_roleAssignmentName'))]",
-        "[resourceId('Microsoft.AppPlatform/Spring/apps/deployments', parameters('asaInstanceName'), parameters('appName'), 'default')]"
+        "[resourceId('Microsoft.AppPlatform/Spring/apps/deployments', parameters('asaInstanceName'), parameters('appName'), 'default')]",
+        "[resourceId('Microsoft.AppPlatform/Spring/buildServices/builders', parameters('asaInstanceName'), 'default', 'default')]"
       ],
       "kind": "AzureCLI",
       "identity": {
