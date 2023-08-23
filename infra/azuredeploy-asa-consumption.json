@@ -45,15 +45,5 @@
         }
       }
     }
-  ],
-  "outputs": {
-    "name": {
-      "type": "string",
-      "value": "[reference(resourceId('Microsoft.Resources/deployments', format('{0}--asa--ard2', deployment().name)), '2022-09-01').outputs.name.value]"
-    },
-    "url": {
-      "type": "string",
-      "value": "[reference(resourceId('Microsoft.Resources/deployments', format('{0}--asa--ard2', deployment().name)), '2022-09-01').outputs.url.value]"
-    }
-  }
+  ]
 }
