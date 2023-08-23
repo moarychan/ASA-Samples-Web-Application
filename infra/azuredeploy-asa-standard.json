@@ -43,17 +43,27 @@
           "relativePath": "azuredeploy.json",
           "contentVersion":"1.0.0.0"
         }
+      },
+      "outputs": {
+        "name": {
+          "type": "string",
+          "value": "[reference(resourceId('Microsoft.Resources/deployments', format('{0}--asa--ard', deployment().name)), '2022-09-01').outputs.name.value]"
+        },
+        "url": {
+          "type": "string",
+          "value": "[reference(resourceId('Microsoft.Resources/deployments', format('{0}--asa--ard', deployment().name)), '2022-09-01').outputs.url.value]"
+        }
       }
     }
   ],
   "outputs": {
     "name": {
       "type": "string",
-      "value": "[reference(resourceId('Microsoft.Resources/deployments', format('{0}--asa--ard', deployment().name)), '2022-09-01').outputs.name.value]"
+      "value": "[reference(resourceId('Microsoft.Resources/deployments', format('{0}--asa', deployment().name)), '2022-09-01').outputs.name.value]"
     },
     "url": {
       "type": "string",
-      "value": "[reference(resourceId('Microsoft.Resources/deployments', format('{0}--asa--ard', deployment().name)), '2022-09-01').outputs.url.value]"
+      "value": "[reference(resourceId('Microsoft.Resources/deployments', format('{0}--asa', deployment().name)), '2022-09-01').outputs.url.value]"
     }
   }
 }
