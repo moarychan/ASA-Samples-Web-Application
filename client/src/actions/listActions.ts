@@ -40,6 +40,7 @@ export const load = (id: string): ActionMethod<TodoList> => async (dispatch: Dis
 }
 
 export const save = (list: TodoList): ActionMethod<TodoList> => async (dispatch: Dispatch<SaveListAction>) => {
+    console.log("*************** list save", list);
     const newList = await listService.save(list);
 
     dispatch(saveListAction(newList));
